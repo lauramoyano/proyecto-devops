@@ -2,6 +2,7 @@
 
 
 ![screenshot]("./frontend-app/public/photo-proyectDevOps.png")
+
 Instalacion:
 ```
 docker build -t devops-proyect .
