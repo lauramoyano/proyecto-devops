@@ -1,7 +1,7 @@
 # proyecto-devops
 
 
-![screenshot](./frontend-app/publicphoto-proyectDevOps.png)
+![screenshot](./frontend-app/public/photo-proyectDevOps.png)
 
 Instalacion:
 ```
