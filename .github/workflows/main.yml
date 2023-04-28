@@ -20,4 +20,4 @@ jobs:
           push: false
           tags: my-image:latest
       - name: Run Docker Container
-        run: docker run my-image
+        run: docker run -it my-image /bin/bash
