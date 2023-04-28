@@ -22,7 +22,7 @@ RUN npm install
 #add app
 COPY . .
 
-COPY --from=react-builder /app/dist ./fronten-app/dist
+COPY --from=react-builder /app/dist ./frontend-app/dist
 
 #Expose port 
 EXPOSE 7000
