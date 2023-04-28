@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: my-image:latest
+      - name: Run Docker Container
+        run: |
+          docker run -d --name my-container my-image
+          docker exec my-container /bin/bash -c "echo 'El contenedor esta corriendo, Hola Mundo !'"
