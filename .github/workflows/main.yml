@@ -10,7 +10,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Build Docker image
-        run: docker build -t my-image .
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: my-image:latest
       - name: Run Docker Container
         run: docker run my-image
