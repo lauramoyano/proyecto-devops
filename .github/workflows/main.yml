@@ -22,4 +22,4 @@ jobs:
       - name: Run Docker Container
         run: |
           docker run -d --name my-container my-image
-          docker exec -it my-container /bin/bash
+          docker exec my-container /bin/bash -c "echo 'Hello World'"
