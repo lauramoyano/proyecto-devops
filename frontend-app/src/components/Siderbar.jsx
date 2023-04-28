@@ -1,8 +1,10 @@
 import { AtSignIcon, CalendarIcon, EditIcon } from "@chakra-ui/icons";
 import { Heading, List, ListIcon, ListItem, Divider, Box, useColorModeValue, Flex, CloseButton, Link, Text} from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export  default function Siderbar() {
+
+    const navigate = useNavigate();
     return (
         <Box transition="3s ease">
  
@@ -11,13 +13,13 @@ export  default function Siderbar() {
 
         </Flex>
         
-        <NavItem >
-           Dashboard
-        </NavItem>
-        <NavItem >
+        <NavItem onClick={() => navigate("/")} >
            Books
         </NavItem>
-        <NavItem >
+        <NavItem onClick={() => navigate("create")}>
+           Create
+        </NavItem>
+        <NavItem onClick={() => navigate("profile")}>
            Users
         </NavItem>
 

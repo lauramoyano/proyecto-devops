@@ -31,5 +31,5 @@ services:
     ports:
       - "80:80"
     
-    depend_on:
+    depends_on:
       - postgres

@@ -23,10 +23,10 @@ app.use(express.json());
 
 
 //inicializar la rutas
-//app.use(bookRoutes);
-//app.use(categoryRoutes);
-//app.use(editorialRoutes);
-//app.use(authorRoutes);
+app.use(bookRoutes);
+app.use(categoryRoutes);
+app.use(editorialRoutes);
+app.use(authorRoutes);
 //app.use(userRoutes);
 //app.use(loanRoutes);
 
@@ -52,4 +52,4 @@ app.set('port', process.env.PORT || 7000)
 
 //abrir puerto del servidor
 app.listen(app.get('port'))
-console.log('server started')
+console.log('server started port:'+app.get('port'))
