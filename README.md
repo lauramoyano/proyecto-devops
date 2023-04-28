@@ -1,6 +1,6 @@
-# proyecto-devops
+# project-devops
 
-Installation:
+<h3 align="left"> Installation :</h3> 
 be located in the main folder and run the command:  
 
 ```
@@ -17,7 +17,7 @@ npm install
 ```
 
 
-Run with Docker:  
+<h3 align="left"> Run with Docker:  </h3>
 
 builds Docker image from a Dockerfile:  
 
