@@ -9,7 +9,7 @@ export  default function Siderbar() {
         <Box transition="3s ease">
  
         <Flex justifyContent={"center"} alignContent={"center"}>
-            <Heading as="h1">Drop</Heading>
+            <Heading as="h1" p="10px">Drop</Heading>
 
         </Flex>
         
