@@ -27,8 +27,8 @@ app.use(bookRoutes);
 app.use(categoryRoutes);
 app.use(editorialRoutes);
 app.use(authorRoutes);
-//app.use(userRoutes);
-//app.use(loanRoutes);
+app.use(userRoutes);
+app.use(loanRoutes);
 
 //Sirve la aplicación de React desde la carpeta frontend-app
 

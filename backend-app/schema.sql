@@ -40,12 +40,12 @@ password varchar(255)
 );
 
 create table loan (
-id_loan serial primary key,
-loan_date date,
-devolution_date date,
-id_user integer,
-isbn integer,
-delivered boolean,
-constraint fk_loan_user foreign key(id_user) references users(id_user),
-constraint fk_loan_book foreign key (isbn) references book(isbn)
+  id_loan serial primary key,
+  loan_date date,
+  devolution_date date,
+  id_user integer,
+  isbn integer,
+  delivered boolean,
+  constraint fk_loan_user foreign key(id_user) references users(id_user),
+  constraint fk_loan_book foreign key(isbn) references book(isbn)
 );
