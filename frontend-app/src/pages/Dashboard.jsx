@@ -15,7 +15,7 @@ import { Heading,
   TableContainer,} from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-const libros =  [{    "isbn": "9781984801810",    "title": "Where the Crawdads Sing",    "score": 4.5,    "published_date": "2018-08-14",    "category": "Fiction",    "author": "Delia Owens",    "editorial": "G.P. Putnam's Sons"  }]
+const libros =  [{    "isbn": "9781984801810",    "title": "LWhere the Crawdads Sing",    "score": 4.5,    "published_date": "2018-08-14",    "category": "Fiction",    "author": "Delia Owens",    "editorial": "G.P. Putnam's Sons"  }]
 
 
 

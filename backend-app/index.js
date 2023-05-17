@@ -31,7 +31,6 @@ app.use(userRoutes);
 app.use(loanRoutes);
 
 //Sirve la aplicación de React desde la carpeta frontend-app
-
  const reactAppPath = path.join(__dirname, '../frontend-app', 'dist');
  app.use(express.static(reactAppPath));
 
@@ -53,3 +52,5 @@ app.set('port', process.env.PORT || 7000)
 //abrir puerto del servidor
 app.listen(app.get('port'))
 console.log('server started port:'+app.get('port'))
+
+module.export  {app}
