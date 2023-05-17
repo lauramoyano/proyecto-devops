@@ -1,4 +1,3 @@
-
 //dependencias del proyecto
 const express = require('express');
 const morgan = require('morgan');
@@ -21,7 +20,6 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-
 //inicializar la rutas
 app.use(bookRoutes);
 app.use(categoryRoutes);
@@ -31,26 +29,27 @@ app.use(userRoutes);
 app.use(loanRoutes);
 
 //Sirve la aplicación de React desde la carpeta frontend-app
- const reactAppPath = path.join(__dirname, '../frontend-app', 'dist');
- app.use(express.static(reactAppPath));
+const reactAppPath = path.join(__dirname, '../frontend-app', 'dist');
+app.use(express.static(reactAppPath));
 
- app.get('/', (req, res) => {
- res.sendFile(path.join(reactAppPath, 'index.html'));
- });
+app.get('/', (req, res) => {
+  res.sendFile(path.join(reactAppPath, 'index.html'));
+});
 
-
- //manejador de errores
-app.use((err, req, res, next)=> {
-     return res.json({
-         message: err.message
-	 })
-})
+//manejador de errores
+app.use((err, req, res, next) => {
+  return res.json({
+    message: err.message,
+  });
+});
 
 //asignar valor de puerto
-app.set('port', process.env.PORT || 7000)
+app.set('port', process.env.PORT || 7000);
 
 //abrir puerto del servidor
-app.listen(app.get('port'))
-console.log('server started port:'+app.get('port'))
+app.listen(app.get('port'));
+console.log('server started port:' + app.get('port'));
 
-module.export  {app}
+module.exports = {
+  app,
+};
