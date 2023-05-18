@@ -17,10 +17,14 @@ describe('authors.router', () => {
       const response1 = await request('localhost:7000').get('/authors/1');
       expect(response1.status).toBe(200);
 
-      const response2 = await request('localhost:7000').get('/authors/3000');
+      const response2 = await request('localhost:7000').get('/authors/-1');
       expect(response2.status).toBe(404);
       expect(response2.body).toHaveProperty('message', 'Author no found --get');
     });
   });
+
+
+
+
 
 });

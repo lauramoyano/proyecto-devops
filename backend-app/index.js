@@ -1,7 +1,6 @@
 //dependencias del proyecto
 const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+gi
 const path = require('path');
 
 //rutas requeridas

@@ -70,7 +70,7 @@ describe('books.router', () => {
       const book = {
         title: "test prueba",
         score: 9,
-        published_date: "2022",
+        published_date: 2022,
         id_category: 1,
         id_author: 2,
         id_editorial: 3
