@@ -6,13 +6,12 @@ const api = supertest(app);
 // Pruebas de GET /authors...
 test('debe retornar todos los autores', async () => {
   await api.get('/authors').expect(200);
-
-  // expect(response.status).toEqual(200);
-  // Resto del código de la prueba...
 });
 
 test('debe retornar un libro específico', async () => {
   await api.get('/authors/1').expect(200);
+
+  // Aca va el resto de tests
 });
 afterAll(() => {
   server.close();
