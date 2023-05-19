@@ -15,12 +15,11 @@ const getLoan = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
-      'SELECT id_loan, loan_date, devolution_date, full_name, title, delivered FROM loan natural join users natural join book WHERE id_loan=$1',
+      'SELECT id_loan, loan_date, devolution_date, full_name, title  WHERE id_loan=$1',
       [id]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Loan no found--get' });
+    if (result.rows.length > 0) {
+      return res.status(404).json({ message: 'Loan no found --update' });
     }
 
     return res.json(result.rows[0]);

@@ -19,7 +19,7 @@ const getUser = async (req, res, next) => {
     ]);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Book no found--get' });
+      return res.status(404).json({ message: 'User no found --get' });
     }
 
     return res.json(result.rows[0]);
