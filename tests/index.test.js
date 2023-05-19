@@ -127,6 +127,19 @@ describe('categories.router', () => {
       expect(response.status).toBe(200);
     });
   });
+  describe('GET /categories/:id', () => {
+    test('debe retornar un categories específico', async () => {
+      const response1 = await api.get('/categories/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/categories/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty(
+        'message',
+        'categorie no found --get'
+      );
+    });
+  });
 });
 
 describe('editorial.router', () => {
@@ -136,6 +149,19 @@ describe('editorial.router', () => {
       const response = await api.get('/editorials');
       //console.log('El status de respuesta es:', response.status);
       expect(response.status).toBe(200);
+    });
+  });
+  describe('GET /editorial/:id', () => {
+    test('debe retornar una editorial específica', async () => {
+      const response1 = await api.get('/editorial/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/editorial/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty(
+        'message',
+        'editorial no found --get'
+      );
     });
   });
 });
@@ -149,6 +175,17 @@ describe('loans.router', () => {
       expect(response.status).toBe(200);
     });
   });
+
+  describe('GET /loans/:id', () => {
+    test('debe retornar un prestamo específico', async () => {
+      const response1 = await api.get('/loans/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/loans/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty('message', 'loan no found --get');
+    });
+  });
 });
 
 describe('users.router', () => {
@@ -158,6 +195,16 @@ describe('users.router', () => {
       const response = await api.get('/users');
       //console.log('El status de respuesta es:', response.status);
       expect(response.status).toBe(200);
+    });
+  });
+  describe('GET /users/:id', () => {
+    test('debe retornar un usuario específico', async () => {
+      const response1 = await api.get('/users/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/users/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty('message', 'user no found --get');
     });
   });
 });
