@@ -1,7 +1,8 @@
 //dependencias del proyecto
 const express = require('express');
-gi
+const cors = require('cors');
 const path = require('path');
+const morgan = require('morgan');
 
 //rutas requeridas
 const bookRoutes = require('./routes/books.routes');
@@ -43,12 +44,12 @@ app.use((err, req, res, next) => {
 });
 
 //asignar valor de puerto
-app.set('port', process.env.PORT || 7000);
-
+const PORT = 7000;
+const server = app.listen(PORT, () => {
+  console.log('Server running on port');
+});
 //abrir puerto del servidor
-app.listen(app.get('port'));
-console.log('server started port:' + app.get('port'));
+// const server = app.listen(app.get('port'));
+// console.log('server started port:' + app.get('port'));
 
-module.exports = {
-  app,
-};
+module.exports = { app, server };

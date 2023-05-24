@@ -1,7 +1,31 @@
 const request = require('supertest');
-
-
 const API_BASE_URL = process.env.API_BASE_URL || 'localhost:7000';
+
+describe('authors.router', () => {
+  // Prueba para GET /books
+  describe('GET /authors', () => {
+    test('debe retornar todos los autores', async () => {
+      const response = await request('localhost:7000').get('/authors');
+      //console.log('El status de respuesta es:', response.status);
+      expect(response.status).toBe(200);
+      expect(Array.isArray(response.body)).toBe(true);
+    });
+  });
+
+  describe('GET /authors/:id', () => {
+    test('debe retornar un libro específico', async () => {
+      
+      const response1 = await request('localhost:7000').get('/authors/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await request('localhost:7000').get('/authors/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty('message', 'Author no found --get');
+    });
+  });
+
+});
+
 
 describe('books.router', () => {
   
@@ -90,7 +114,7 @@ describe('books.router', () => {
 
 
   describe('DELETE /authors/:id', () => {
-    it('debe eliminar un libro específico', async () => {
+    test('debe eliminar un libro específico', async () => {
      
     //prueba eliminar el ultimo libro creado en la prueba
      const response1 = await request(API_BASE_URL ).delete(`/books/${id_last_book}`);
@@ -105,3 +129,51 @@ describe('books.router', () => {
 
 
 });
+
+
+describe('categories.router', () => {
+    // Prueba para GET /books
+    describe('GET /categories', () => {
+      test('debe retornar todos las categorias', async () => {
+        const response = await request('localhost:7000').get('/categories');
+        //console.log('El status de respuesta es:', response.status);
+        expect(response.status).toBe(200);
+      });
+    });
+ });
+
+
+ describe('editorial.router', () => {
+    // Prueba para GET /books
+    describe('GET /editorial', () => {
+      test('debe retornar todas las editoriales', async () => {
+        const response = await request('localhost:7000').get('/editorials');
+        //console.log('El status de respuesta es:', response.status);
+        expect(response.status).toBe(200);
+      });
+    });
+  });
+
+
+  describe('loans.router', () => {
+    // Prueba para GET /books
+    describe('GET /loans', () => {
+      test('debe retornar todos los prestamos', async () => {
+        const response = await request('localhost:7000').get('/loans');
+        //console.log('El status de respuesta es:', response.status);
+        expect(response.status).toBe(200);
+      });
+    });
+  });
+
+
+  describe('users.router', () => {
+    // Prueba para GET /books
+    describe('GET /users', () => {
+      test('debe retornar todos los usuarios', async () => {
+        const response = await request('localhost:7000').get('/users');
+        //console.log('El status de respuesta es:', response.status);
+        expect(response.status).toBe(200);
+      });
+    });
+  });
