@@ -43,7 +43,12 @@ jobs:
         with:
           context: .
           dockerfile: Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/prueba:latest
+          push: false
+          tags: my-image:latest
+      - name: Run Docker Container
+        run: |
+          docker run -d --name my-container my-image
+          docker  tag ${{ secrets.DOCKERHUB_USERNAME }}/devops:latest my-image
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops:latest
  
     
