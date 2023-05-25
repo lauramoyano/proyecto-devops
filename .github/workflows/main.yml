@@ -41,9 +41,7 @@ jobs:
       - name: Build docker
         run: |
               docker build -t merlin:latest .
+              docker tag merlin:latest joshuaaax/merlin:latest
+              docker push joshuaaax/merlin:latest
               
-      - name: Push Docker image
-        run: |
-          docker tag merlin:latest ${{ secrets.DOCKER_USERNAME }}/merlin:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/merlin:latest
     
