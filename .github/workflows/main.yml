@@ -43,8 +43,7 @@ jobs:
         with:
           context: .
           dockerfile: Dockerfile
-          push: false
-          tags: prueba:latest
-     
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/prueba
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/prueba:latest
+ 
+    
