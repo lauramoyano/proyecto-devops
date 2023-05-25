@@ -31,13 +31,20 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_MESSAGE: 'Test results: ${{ job.status }}'
+          
       - name: login to Docker hub
         uses: docker/login-action@v2
         with:
            username: ${{ secrets.DOCKERHUB_USERNAME }}
            password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/prueba
-
+           
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: prueba:latest
+     
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/prueba
