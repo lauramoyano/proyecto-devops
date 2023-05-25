@@ -44,6 +44,6 @@ jobs:
               
       - name: Push Docker image
         run: |
-          docker tag merlin:latest ${{ env.DOCKER_USERNAME }}/merlin:latest
-          docker push ${{ env.DOCKER_USERNAME }}/merlin:latest
+          docker tag merlin:latest ${{ secrets.DOCKER_USERNAME }}/merlin:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/merlin:latest
     
