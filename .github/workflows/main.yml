@@ -41,7 +41,7 @@ jobs:
       - name: Build docker
         run: |
               docker build -t lancelot:latest .
-              docker tag merlin:latest joshuaaax/lancelot:latest
+              docker tag lancelot:latest joshuaaax/lancelot:latest
               docker push joshuaaax/lancelot:latest
               
     
