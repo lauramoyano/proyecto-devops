@@ -1,12 +1,9 @@
-name: Create and publish a Docker image
-
+name: Build
 on:
   push:
-    branches: ['master']
+    branches:
+      - master
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
