@@ -3,35 +3,44 @@ on:
   push:
     branches:
       - master
-
-
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  build-and-push-image:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Log in to the Container registry
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+   #   - name: Set up Node.js
+   #     uses: actions/setup-node@v2
+   #     with:
+   #       node-version: 14
+   #  - name: Install dependencies
+   #   run: npm ci
+   #   - name: Run Jest tests
+   #     run: npm run test:coverage
+   #  - name: SonarCloud Scan
+   #     uses: sonarsource/sonarcloud-github-action@master
+   #     env:
+   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+   #   - name: Notify Slack
+   #     uses: rtCamp/action-slack-notify@v2
+   #     env:
+   #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+   #       SLACK_MESSAGE: 'Test results: ${{ job.status }}'     
+        
+      - name: login to Docker hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+           username: ${{ secrets.DOCKERHUB_USERNAME }}
+           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/arturo
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build docker
+        run: |
+              docker build -t perceval:latest .
+              docker tag perceval:latest joshuaaax/perceval:latest
+              docker push joshuaaax/perceval:latest
+              
