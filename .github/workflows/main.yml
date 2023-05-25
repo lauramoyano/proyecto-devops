@@ -40,8 +40,8 @@ jobs:
 
       - name: Build docker
         run: |
-              docker build -t merlin:latest .
-              docker tag merlin:latest joshuaaax/merlin:latest
-              docker push joshuaaax/merlin:latest
+              docker build -t lancelot:latest .
+              docker tag merlin:latest joshuaaax/lancelot:latest
+              docker push joshuaaax/lancelot:latest
               
     
