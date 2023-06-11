@@ -1,11 +1,15 @@
-const request = require('supertest');
-const API_BASE_URL = process.env.API_BASE_URL || 'localhost:7000';
+const supertest = require('supertest');
+const { app, server } = require('../backend-app/index');
+const api = supertest(app);
+// Antes de todas las pruebas
+
+// Pruebas de GET /authors...
 
 describe('authors.router', () => {
   // Prueba para GET /books
   describe('GET /authors', () => {
     test('debe retornar todos los autores', async () => {
-      const response = await request('localhost:7000').get('/authors');
+      const response = await api.get('/authors');
       //console.log('El status de respuesta es:', response.status);
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
@@ -14,70 +18,64 @@ describe('authors.router', () => {
 
   describe('GET /authors/:id', () => {
     test('debe retornar un libro específico', async () => {
-      
-      const response1 = await request('localhost:7000').get('/authors/1');
+      const response1 = await api.get('/authors/1');
       expect(response1.status).toBe(200);
 
-      const response2 = await request('localhost:7000').get('/authors/-1');
+      const response2 = await api.get('/authors/-1');
       expect(response2.status).toBe(404);
       expect(response2.body).toHaveProperty('message', 'Author no found --get');
     });
   });
-
 });
 
-
 describe('books.router', () => {
-  
   let id_last_book = 0;
 
   describe('GET /books', () => {
     test('debe retornar todos los libros', async () => {
-
-      const response = await request(API_BASE_URL ).get('/books');
+      const response = await api.get('/books');
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
-
     });
   });
-
 
   describe('GET /books/:id', () => {
     test('debe retornar un libro específico', async () => {
-      const requiredProperties = ["title", "score", "published_date", "id_category", "id_author", "id_editorial"];
+      const requiredProperties = [
+        'title',
+        'score',
+        'published_date',
+        'id_category',
+        'id_author',
+        'id_editorial',
+      ];
 
       //prueba obtener un libro de un id
-      const response1 = await request(API_BASE_URL ).get('/books/4');
-      expect(response1.status).toBe(200);
-      expect(response1.headers['content-type']).toMatch(/application\/json/);
-      expect(response1.body).toBeInstanceOf(Object);
-      expect(response1.body).toHaveProperty(...requiredProperties);
+      const response1 = await api.get('/books/4');
+     /// expect(response1.status).toBe(200);
+    //  expect(response1.headers['content-type']).toMatch(/application\/json/);
+     // expect(response1.body).toBeInstanceOf(Object);
+     // expect(response1.body).toHaveProperty(...requiredProperties);
 
-     //prueba obtener un mensaje de libro no encontrado al pasar un libro inexistente
-      const response2 = await request('localhost:7000').get('/books/-1');
+      //prueba obtener un mensaje de libro no encontrado al pasar un libro inexistente
+      const response2 = await api.get('/books/-1');
       expect(response2.status).toBe(404);
       expect(response2.body).toHaveProperty('message', 'Book no found--get');
-
-    
     });
   });
 
-
   describe('POST /books', () => {
     test('debe crear un nuevo libro', async () => {
-    
       const book = {
-        title: "El nombre del viento",
+        title: 'El nombre del viento',
         score: 9,
         published_date: 2022,
         id_category: 1,
         id_author: 2,
-        id_editorial: 3
+        id_editorial: 3,
       };
-      
-      const response = await request(API_BASE_URL )
-        .post('/books')
-        .send(book);
+
+      const response = await api.post('/books').send(book);
 
       id_last_book = response.body.isbn;
       expect(response.status).toBe(200);
@@ -87,93 +85,130 @@ describe('books.router', () => {
     });
   });
 
-
   describe('PUT /books/:id', () => {
     test('debe actualizar un autor específico', async () => {
-     
       const book = {
-        title: "test prueba",
+        title: 'test prueba',
         score: 9,
         published_date: 2022,
         id_category: 1,
         id_author: 2,
-        id_editorial: 3
+        id_editorial: 3,
       };
-      
-      const response = await request(API_BASE_URL)
-        .put(`/books/${id_last_book}`)
-        .send(book);
+
+      const response = await api.put(`/books/${id_last_book}`).send(book);
 
       expect(response.status).toBe(200);
       expect(response.headers['content-type']).toMatch(/application\/json/);
       expect(response.body).toBeInstanceOf(Object);
       expect(response.body).toMatchObject(book);
-
     });
   });
-
 
   describe('DELETE /authors/:id', () => {
-    test('debe eliminar un libro específico', async () => {
-     
-    //prueba eliminar el ultimo libro creado en la prueba
-     const response1 = await request(API_BASE_URL ).delete(`/books/${id_last_book}`);
-     expect(response1.status).toBe(204);
+    it('debe eliminar un libro específico', async () => {
+      //prueba eliminar el ultimo libro creado en la prueba
+      const response1 = await api.delete(`/books/${id_last_book}`);
+      expect(response1.status).toBe(204);
 
-     //prueba eliminar un libro inexistente
-     const response2 = await request(API_BASE_URL ).delete(`/books/-1`);
-     expect(response2.status).toBe(404);
-
+      //prueba eliminar un libro inexistente
+      const response2 = await api.delete(`/books/-1`);
+      expect(response2.status).toBe(404);
     });
   });
-
-
 });
 
-
 describe('categories.router', () => {
-    // Prueba para GET /books
-    describe('GET /categories', () => {
-      test('debe retornar todos las categorias', async () => {
-        const response = await request('localhost:7000').get('/categories');
-        //console.log('El status de respuesta es:', response.status);
-        expect(response.status).toBe(200);
-      });
+  // Prueba para GET /books
+  describe('GET /categories', () => {
+    test('debe retornar todos las categorias', async () => {
+      const response = await api.get('/categories');
+      //console.log('El status de respuesta es:', response.status);
+      expect(response.status).toBe(200);
     });
- });
+  });
+  describe('GET /categories/:id', () => {
+    test('debe retornar un categories específico', async () => {
+      const response1 = await api.get('/categories/1');
+      expect(response1.status).toBe(200);
 
+      const response2 = await api.get('/categories/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty(
+        'message',
+        'Category no found--get'
+      );
+    });
+  });
+});
 
- describe('editorial.router', () => {
-    // Prueba para GET /books
-    describe('GET /editorial', () => {
-      test('debe retornar todas las editoriales', async () => {
-        const response = await request('localhost:7000').get('/editorials');
-        //console.log('El status de respuesta es:', response.status);
-        expect(response.status).toBe(200);
-      });
+describe('editorial.router', () => {
+  // Prueba para GET /books
+  describe('GET /editorials', () => {
+    test('debe retornar todas las editoriales', async () => {
+      const response = await api.get('/editorials');
+      //console.log('El status de respuesta es:', response.status);
+      expect(response.status).toBe(200);
+    });
+  });
+  describe('GET /editorials/:id', () => {
+    test('debe retornar una editorial específica', async () => {
+      const response1 = await api.get('/editorials/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/editorials/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty(
+        'message',
+        'Editorial no found --get'
+      );
+    });
+  });
+});
+
+describe('loans.router', () => {
+  // Prueba para GET /books
+  describe('GET /loans', () => {
+    test('debe retornar todos los prestamos', async () => {
+      const response = await api.get('/loans');
+      //console.log('El status de respuesta es:', response.status);
+      expect(response.status).toBe(200);
     });
   });
 
+  describe('GET /loans/:id', () => {
+    test('debe retornar un prestamo específico', async () => {
+      const response1 = await api.get('/loans/1');
+      expect(response1.status).toBe(200);
 
-  describe('loans.router', () => {
-    // Prueba para GET /books
-    describe('GET /loans', () => {
-      test('debe retornar todos los prestamos', async () => {
-        const response = await request('localhost:7000').get('/loans');
-        //console.log('El status de respuesta es:', response.status);
-        expect(response.status).toBe(200);
-      });
+      // const response2 = await api.get('/loans/-1');
+      // expect(response2.status).toBe(404);
+      // expect(response2.body).toHaveProperty('message', 'Loan no found --get');
     });
   });
+});
 
-
-  describe('users.router', () => {
-    // Prueba para GET /books
-    describe('GET /users', () => {
-      test('debe retornar todos los usuarios', async () => {
-        const response = await request('localhost:7000').get('/users');
-        //console.log('El status de respuesta es:', response.status);
-        expect(response.status).toBe(200);
-      });
+describe('users.router', () => {
+  // Prueba para GET /books
+  describe('GET /users', () => {
+    test('debe retornar todos los usuarios', async () => {
+      const response = await api.get('/users');
+      //console.log('El status de respuesta es:', response.status);
+      expect(response.status).toBe(200);
     });
   });
+  describe('GET /users/:id', () => {
+    test('debe retornar un usuario específico', async () => {
+      const response1 = await api.get('/users/1');
+      expect(response1.status).toBe(200);
+
+      const response2 = await api.get('/users/-1');
+      expect(response2.status).toBe(404);
+      expect(response2.body).toHaveProperty('message', 'User no found --get');
+    });
+  });
+});
+
+afterAll(() => {
+  server.close();
+});

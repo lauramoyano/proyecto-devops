@@ -1,25 +1,46 @@
-name: Docker Image CI
-
+name: Build
 on:
   push:
-    branches: ['master']
+    branches:
+      - master
   pull_request:
-    branches: ['master']
-
+    types: [opened, synchronize, reopened]
 jobs:
-  test:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
+      - uses: actions/checkout@v3
         with:
-          context: .
-          dockerfile: Dockerfile
-          push: false
-          tags: my-image:latest
-      - name: Run Docker Container
+          fetch-depth: 0
+   #   - name: Set up Node.js
+   #     uses: actions/setup-node@v2
+   #     with:
+   #       node-version: 14
+   #  - name: Install dependencies
+   #   run: npm ci
+   #   - name: Run Jest tests
+   #     run: npm run test:coverage
+   #  - name: SonarCloud Scan
+   #     uses: sonarsource/sonarcloud-github-action@master
+   #     env:
+   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+   #   - name: Notify Slack
+   #     uses: rtCamp/action-slack-notify@v2
+   #     env:
+   #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+   #       SLACK_MESSAGE: 'Test results: ${{ job.status }}'     
+        
+      - name: login to Docker hub
+        uses: docker/login-action@v2
+        with:
+           username: ${{ secrets.DOCKERHUB_USERNAME }}
+           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build docker
         run: |
-          docker run -d --name my-container my-image
-          docker exec my-container /bin/bash -c "echo 'El contenedor esta corriendo, Hola Mundo !'"
+              docker build -t perceval:latest .
+              docker tag perceval:latest joshuaaax/perceval:latest
+              docker push joshuaaax/perceval:latest
+              

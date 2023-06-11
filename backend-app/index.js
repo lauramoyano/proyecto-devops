@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 
+
 //rutas requeridas
 const bookRoutes = require('./routes/books.routes');
 const categoryRoutes = require('./routes/categories.routes');
@@ -48,6 +49,7 @@ const PORT = 7000;
 const server = app.listen(PORT, () => {
   console.log('Server running on port');
 });
+
 //abrir puerto del servidor
 // const server = app.listen(app.get('port'));
 // console.log('server started port:' + app.get('port'));
